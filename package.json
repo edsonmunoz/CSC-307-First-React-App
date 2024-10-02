@@ -1,7 +1,7 @@
 {
   "name": "csc-307-app",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is a react web app that I created in my CSC 307 class at Cal Poly",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "workspaces": [
-      "packages/*"
+    "packages/*"
   ]
 }
