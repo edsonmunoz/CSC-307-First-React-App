@@ -13,7 +13,7 @@ function MyApp() {
 
     useEffect(() => {
         fetchUsers()
-            .then((res) => res.json())
+            .then((res) =>  res.json())
             .then((json) => setCharacters(json["users_list"]))
             .catch((error) => { console.log(error); });
     }, [] );
@@ -26,7 +26,6 @@ function MyApp() {
           },
           body: JSON.stringify(person),
         });
-    
         return promise;
     }
     
@@ -43,7 +42,20 @@ function MyApp() {
 
     function updateList(person) { 
         postUser(person)
-            .then(() => setCharacters([...characters, person]))
+            .then(function(response){ 
+                if(response.status === 201) 
+                    return response.json(); 
+            })
+            .then(function(data) {
+                person = data;
+                setCharacters([...characters, person])
+            /*.then((response) => {
+                console.log(response.json())*/
+
+                /*if(response.status === 201) {
+                    setCharacters([...characters, person])
+                }*/
+            })
             .catch((error) => {
             console.log(error);
           })

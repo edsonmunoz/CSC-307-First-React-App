@@ -57,6 +57,15 @@ const findUserById = (id) =>
 //curly braces indicate explicit return
 //multi line functions require a {} and require an explicit return statement
 const addUser = (user) => {
+    let user_temp = { }
+    let id = ""
+    for(let i = 0; i < 3; i++)
+        id += String.fromCharCode(97 + Math.floor(Math.random() * 26))
+    id += Math.floor(Math.random() * 999).toString()
+    user_temp["id"] = id
+    user_temp["name"] = user.name
+    user_temp["job"] = user.job
+    user = user_temp
     users["users_list"].push(user);
     return user;
 };
@@ -71,8 +80,9 @@ const deleteUser = (id) => {
 //add user POST function
 app.post("/users", (req, res) => {
     const userToAdd = req.body;
-    addUser(userToAdd);
-    res.send();
+    let user = addUser(userToAdd);
+    //res.send() defaults to 200
+    res.status(201).send(user);
 });
 
 //recieves a POST request with user id and deletes the user
