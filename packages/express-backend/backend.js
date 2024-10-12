@@ -85,15 +85,15 @@ app.post("/users", (req, res) => {
     res.status(201).send(user);
 });
 
-//recieves a POST request with user id and deletes the user
-app.post("/users/:id", (req, res) => {
+//recieves a DELETE request with user id and deletes the user
+app.delete("/users/:id", (req, res) => {
     const userToDeleteId = req.params["id"]
     let result = findUserById(userToDeleteId);
     if(result === undefined) {
         res.status(404).send("Resource not found.");
     } else {
         deleteUser(userToDeleteId)
-        res.send()
+        res.sendStatus(204)
     }
 })
 

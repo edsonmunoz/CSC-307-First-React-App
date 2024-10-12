@@ -28,13 +28,29 @@ function MyApp() {
         });
         return promise;
     }
-    
+
+    function postforRemoval(person) {
+        const promise = fetch("Http://localhost:8000/users/"+person.id, {
+            method: "DELETE", //must match the type of function in backend e.g app.delete 
+            body: JSON.stringify(person),
+        });
+        return promise
+    }
 
     function removeOneCharacter(index) {
-        const updated = characters.filter((character, i) => {
-            return i !== index;
-        });
-        setCharacters(updated);
+        let person = characters[index]
+        postforRemoval(person)
+            .then(function(response){
+                if(response.status === 204){
+                    const updated = characters.filter((character, i) => {
+                    return i !== index;
+                    setCharacters(updated);
+                    });
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     }
     //function updateList(person) {
     //    setCharacters([...characters, person]);
@@ -46,8 +62,7 @@ function MyApp() {
                 if(response.status === 201) 
                     return response.json(); 
             })
-            .then(function(data) {
-                person = data;
+            .then(function(person) {
                 setCharacters([...characters, person])
             /*.then((response) => {
                 console.log(response.json())*/
