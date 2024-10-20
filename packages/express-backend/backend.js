@@ -49,6 +49,12 @@ const findUserByJob = (job) => {
     );
 };
 
+const findUserByBoth = (name, job) => {
+    return users["users_list"].filter(
+        (user) => (user.name === name && user.job === job)
+    );
+};
+
 //implicit return in this function 
 //single line expressions can omit {} and automatically return resul
 const findUserById = (id) => 
@@ -99,8 +105,12 @@ app.delete("/users/:id", (req, res) => {
 
 app.get("/users", (req, res) => {
     const name = req.query.name
-    const job = req.query.job
-    if (name != undefined) {
+    const job = req.query.job    
+    if(job != undefined && name != undefined) {
+        let result = findUserByBoth(name, job)
+        res.send(result)
+    }
+    else if (name != undefined) {
         let result = findUserByName(name);
         result = { users_list: result };
         res.send(result);
@@ -111,7 +121,7 @@ app.get("/users", (req, res) => {
         res.send(result);
     } 
     else {
-      res.send(users);
+        res.send(users);
     }
 });
   
@@ -124,15 +134,10 @@ app.get("/users/:id", (req, res) => {
       res.send(result);
     }
 });
-  
 
 app.get("/", (req, res) => {
     res.send("Hello World!");
 });
-
-//app.get("/users", (req, res) => {
-  //  res.send(users);
-//});
 
 app.listen(port, () => {
     console.log(

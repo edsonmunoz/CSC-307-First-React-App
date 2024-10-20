@@ -43,9 +43,9 @@ function MyApp() {
             .then(function(response){
                 if(response.status === 204){
                     const updated = characters.filter((character, i) => {
-                    return i !== index;
-                    setCharacters(updated);
+                        return i !== index;
                     });
+                    setCharacters(updated)
                 }
             })
             .catch((error) => {
@@ -64,12 +64,9 @@ function MyApp() {
             })
             .then(function(person) {
                 setCharacters([...characters, person])
-            /*.then((response) => {
-                console.log(response.json())*/
-
-                /*if(response.status === 201) {
-                    setCharacters([...characters, person])
-                }*/
+            })
+            .then((response) => {
+                console.log(response.json())
             })
             .catch((error) => {
             console.log(error);
