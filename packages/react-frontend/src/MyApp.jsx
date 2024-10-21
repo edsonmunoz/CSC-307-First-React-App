@@ -14,7 +14,9 @@ function MyApp() {
     useEffect(() => {
         fetchUsers()
             .then((res) =>  res.json())
-            .then((json) => setCharacters(json["users_list"]))
+            .then(function(json){
+                setCharacters(json)
+            })
             .catch((error) => { console.log(error); });
     }, [] );
     
@@ -30,7 +32,7 @@ function MyApp() {
     }
 
     function postforRemoval(person) {
-        const promise = fetch("Http://localhost:8000/users/"+person.id, {
+        const promise = fetch("Http://localhost:8000/users/"+person._id, {
             method: "DELETE", //must match the type of function in backend e.g app.delete 
             body: JSON.stringify(person),
         });
@@ -65,12 +67,7 @@ function MyApp() {
             .then(function(person) {
                 setCharacters([...characters, person])
             })
-            .then((response) => {
-                console.log(response.json())
-            })
-            .catch((error) => {
-            console.log(error);
-          })
+            .catch((error) => { console.log(error); });
     }
     
 
